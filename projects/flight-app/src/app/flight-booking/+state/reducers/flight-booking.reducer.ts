@@ -24,6 +24,16 @@ const flightBookingReducer = createReducer(
     (state, action) => ({ ...state, flights: action.flights })
   ),
 
+  on(FlightBookingActions.flightUpdate,
+    (state, action) => {
+      const flights = state.flights.map(flight =>
+        flight.id === action.flight.id ? action.flight : flight
+      );
+
+      return { ...state, flights };
+    }
+  ),
+
 );
 
 export function reducer(state: State | undefined, action: Action) {
