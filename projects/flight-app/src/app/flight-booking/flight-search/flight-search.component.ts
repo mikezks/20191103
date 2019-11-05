@@ -28,13 +28,13 @@ export class FlightSearchComponent implements OnInit {
 
   constructor(
     private flightService: FlightService,
-    private store: Store<fromFlightBooking.State>) {
+    private store: Store<fromFlightBooking.FeatureState>) {
   }
 
   ngOnInit() {
     this.flights$ = this.store
       .pipe(
-        select(state => state[fromFlightBooking.flightBookingFeatureKey].flights)
+        select(state => state.flightBooking.flights)
       );
   }
 

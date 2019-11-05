@@ -10,7 +10,7 @@ export interface State {
 }
 
 export interface FeatureState extends RootState {
-  [flightBookingFeatureKey]: State;
+  flightBooking: State;
 }
 
 export const initialState: State = {
