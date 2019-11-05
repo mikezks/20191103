@@ -19,6 +19,8 @@ import * as fromRoot from './+state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from "@ngrx/effects";
+import { StoreRouterConnectingModule, RouterStateSerializer, RouterState } from '@ngrx/router-store';
+import { CustomSerializer } from "./+state/router";
 
 @NgModule({
   imports: [
@@ -37,10 +39,16 @@ import { EffectsModule } from "@ngrx/effects";
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,
+        strictStateSerializability: true,
+        strictActionSerializability: true
       }
     }),
     EffectsModule.forRoot([fromRoot.AppEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreRouterConnectingModule.forRoot({
+      stateKey: 'router',
+      routerState: RouterState.Minimal
+    })
   ],
   declarations: [
     AppComponent,
@@ -49,7 +57,9 @@ import { EffectsModule } from "@ngrx/effects";
     HomeComponent,
     BasketComponent
   ],
-  providers: [],
+  providers: [
+    { provide: RouterStateSerializer, useClass: CustomSerializer }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
