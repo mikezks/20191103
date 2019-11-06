@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FlightService, Flight} from '@flight-workspace/flight-api';
+import { Flight} from '@flight-workspace/flight-api';
 import * as fromFlightBooking from '../+state';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -27,9 +27,7 @@ export class FlightSearchComponent implements OnInit {
     "5": true
   };
 
-  constructor(
-    private flightService: FlightService,
-    private store: Store<fromFlightBooking.FeatureState>) {
+  constructor(private store: Store<fromFlightBooking.FeatureState>) {
   }
 
   ngOnInit() {
@@ -45,13 +43,18 @@ export class FlightSearchComponent implements OnInit {
     /* this.flightService
       .load(this.from, this.to, this.urgent); */
 
-    this.flightService
+    /* this.flightService
       .find(this.from, this.to, this.urgent)
       .subscribe(
         flights => this.store.dispatch(
           fromFlightBooking.flightsLoaded({ flights })
         )
-      );
+      ); */
+
+    this.store.dispatch(fromFlightBooking.flightsLoad({
+      from: this.from,
+      to: this.to
+    }));
   }
 
   delay(): void {
