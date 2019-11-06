@@ -1,7 +1,7 @@
 import { FlightCancellingModule } from "./flight-booking/flight-cancelling/flight-cancelling.module";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule } from "@angular/core";
+import { NgModule, ErrorHandler } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
 import { FlightApiModule } from "@flight-workspace/flight-api";
@@ -21,6 +21,7 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from "@ngrx/effects";
 import { StoreRouterConnectingModule, RouterStateSerializer, RouterState } from '@ngrx/router-store';
 import { CustomSerializer } from "./+state/router";
+import { CustomErrorHandlerService } from "./shared/ccc/custom-error-handler.service";
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { CustomSerializer } from "./+state/router";
     BasketComponent
   ],
   providers: [
-    { provide: RouterStateSerializer, useClass: CustomSerializer }
+    { provide: RouterStateSerializer, useClass: CustomSerializer },
+    { provide: ErrorHandler, useClass: CustomErrorHandlerService }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Optional} from '@angular/core';
 import { Flight} from '@flight-workspace/flight-api';
 import * as fromFlightBooking from '../+state';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { first, delay } from 'rxjs/operators';
+import { FlightEditComponent } from '../flight-edit/flight-edit.component';
 
 @Component({
   selector: 'flight-search',
@@ -27,7 +28,10 @@ export class FlightSearchComponent implements OnInit {
     "5": true
   };
 
-  constructor(private store: Store<fromFlightBooking.FeatureState>) {
+  constructor(
+    private store: Store<fromFlightBooking.FeatureState>,
+    // Without @Optional: Error to demonstrate Custom Error Handler
+    @Optional() private editC: FlightEditComponent) {
   }
 
   ngOnInit() {
