@@ -3,10 +3,21 @@ import * as FlightBookingActions from '../actions/flight-booking.actions';
 import { Flight } from '@flight-workspace/flight-api';
 import { RootState } from '../../../+state';
 
+export interface Passenger {
+  id: number;
+  firstname: string;
+  name: string;
+  bonusMiles: number;
+  passengerStatus: string;
+}
+
 export const flightBookingFeatureKey = 'flightBooking';
 
 export interface State {
-  flights: Flight[]
+  flights: Flight[];
+  passengers: Passenger[];
+  bookings: { flightId: number, passengerId: number }[];
+  activeUser: number;
 }
 
 export interface FeatureState extends RootState {
@@ -14,7 +25,21 @@ export interface FeatureState extends RootState {
 }
 
 export const initialState: State = {
-  flights: []
+  flights: [],
+  passengers: [
+    {
+      id: 1,
+      firstname: 'Peter',
+      name: 'Müller',
+      bonusMiles: 2000,
+      passengerStatus: 'A'
+    }
+  ],
+  bookings: [
+    { flightId: 3, passengerId: 1},
+    { flightId: 5, passengerId: 1}
+  ],
+  activeUser: 1
 };
 
 const flightBookingReducer = createReducer(

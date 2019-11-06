@@ -3,7 +3,7 @@ import { Flight} from '@flight-workspace/flight-api';
 import * as fromFlightBooking from '../+state';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'flight-search',
@@ -33,8 +33,17 @@ export class FlightSearchComponent implements OnInit {
   ngOnInit() {
     this.flights$ = this.store
       .pipe(
-        select(state => state.flightBooking.flights)
+        select(
+          //state => state.flightBooking.flights
+          fromFlightBooking.getFlights
+        )
       );
+
+    this.store
+      .pipe(
+        select(fromFlightBooking.getFlightsByActiveUser)
+      )
+      .subscribe(console.log);
   }
 
   search(): void {
